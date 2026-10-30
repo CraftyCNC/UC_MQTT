@@ -37,6 +37,8 @@ Each of the entities above is announced as a retained `sensor` (QoS 1) on
 
 ### Other topics
 - `DustCollector` publishes `OFF` when a G-code program finishes.
+
+  The author runs a dust collector that also listens on MQTT on the `DustCollector` topic. It is switched on manually; the plugin sends `OFF` automatically when a program finishes, so the dust collector shuts down after a long unsupervised run. The dust collector itself is not part of this repo; if you don't have one, the message is harmless and can be ignored.
 - The plugin's test tab can subscribe to, publish to and clear any topic you enter.
 
 ## License
