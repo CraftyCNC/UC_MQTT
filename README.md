@@ -29,7 +29,7 @@ State topics are published every update interval (set in the plugin, in seconds)
 | `<machine>/estop_status/state` | `Estop`, `Cleared` | *Estop/Reset* checkbox |
 | `<machine>/limit_status/state` | `Hard Limit`, `Soft Limit`, `Cleared` | *Limit Switch Hit* checkbox |
 | `<machine>/run_status/state` | `Running`, `Idle` | *Finished (Cycle done)* checkbox |
-| `<machine>/spindle_status/state` | `Running`, `Idle` | *Finished (Cycle done)* checkbox |
+| `<machine>/spindle_status/state` | `Running`, `Idle` | *Spindle on/off* checkbox |
 | `<machine>/current_line/state` | current G-code line number | always |
 | `<machine>/percent_complete/state` | percent of job complete (2 decimals), or `NA` when not running | always |
 | `<machine>/run_time/state` | job run time as shown on the UCCNC job status page | always |

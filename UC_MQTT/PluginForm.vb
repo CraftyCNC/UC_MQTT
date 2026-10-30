@@ -769,7 +769,7 @@ Public Class PluginForm
         End If
 
 
-        If chkboxCycleDone.Checked Then
+        If chkboxSpindle.Checked Then
             entityName = "spindle_status"
 
 

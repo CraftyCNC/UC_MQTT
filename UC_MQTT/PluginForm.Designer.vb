@@ -70,6 +70,7 @@ Partial Class PluginForm
         Me.chkboxLimit = New System.Windows.Forms.CheckBox()
         Me.nudUpdateRate = New System.Windows.Forms.NumericUpDown()
         Me.chkboxCycleDone = New System.Windows.Forms.CheckBox()
+        Me.chkboxSpindle = New System.Windows.Forms.CheckBox()
         Me.Label7 = New System.Windows.Forms.Label()
         Me.txtboxLED5Msg = New System.Windows.Forms.TextBox()
         Me.txtboxLED4Msg = New System.Windows.Forms.TextBox()
@@ -549,6 +550,7 @@ Partial Class PluginForm
         Me.TabPage1.Controls.Add(Me.chkboxLimit)
         Me.TabPage1.Controls.Add(Me.nudUpdateRate)
         Me.TabPage1.Controls.Add(Me.chkboxCycleDone)
+        Me.TabPage1.Controls.Add(Me.chkboxSpindle)
         Me.TabPage1.Controls.Add(Me.Label7)
         Me.TabPage1.Controls.Add(Me.txtboxLED5Msg)
         Me.TabPage1.Controls.Add(Me.txtboxLED4Msg)
@@ -657,6 +659,16 @@ Partial Class PluginForm
         Me.chkboxCycleDone.TabIndex = 83
         Me.chkboxCycleDone.Text = "Finished (Cycle done)"
         Me.chkboxCycleDone.UseVisualStyleBackColor = True
+        '
+        'chkboxSpindle
+        '
+        Me.chkboxSpindle.AutoSize = True
+        Me.chkboxSpindle.Location = New System.Drawing.Point(13, 208)
+        Me.chkboxSpindle.Name = "chkboxSpindle"
+        Me.chkboxSpindle.Size = New System.Drawing.Size(93, 17)
+        Me.chkboxSpindle.TabIndex = 90
+        Me.chkboxSpindle.Text = "Spindle on/off"
+        Me.chkboxSpindle.UseVisualStyleBackColor = True
         '
         'Label7
         '
@@ -1121,6 +1133,7 @@ Partial Class PluginForm
     Friend WithEvents chkboxLED3 As System.Windows.Forms.CheckBox
     Friend WithEvents chkboxLED2 As System.Windows.Forms.CheckBox
     Friend WithEvents chkboxCycleDone As System.Windows.Forms.CheckBox
+    Friend WithEvents chkboxSpindle As System.Windows.Forms.CheckBox
     Friend WithEvents Label7 As System.Windows.Forms.Label
     Friend WithEvents txtboxLED5Msg As System.Windows.Forms.TextBox
     Friend WithEvents txtboxLED4Msg As System.Windows.Forms.TextBox
