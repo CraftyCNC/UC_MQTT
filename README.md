@@ -3,14 +3,14 @@
 A [UCCNC](https://cncdrive.com) plugin (VB.NET) that publishes machine state to an MQTT broker, with Home Assistant discovery support.
 
 ## Prebuilt binaries
-`bin/` contains a Release build: `UC_MQTT.dll` plus its `M2Mqtt.Net.dll` and `Newtonsoft.Json.dll` dependencies. Copy all three into UCCNC's `Plugins` folder. The proprietary UCCNC files are not included.
+`bin/` contains a Release build: `UC_MQTT.dll` plus its `M2Mqtt.Net.dll` and `Newtonsoft.Json.dll` dependencies. Copy `UC_MQTT.dll` into UCCNC's `Plugins` folder, and copy `M2Mqtt.Net.dll` and `Newtonsoft.Json.dll` into the UCCNC install folder itself (one level up from `Plugins`, next to `UCCNC.exe`). The proprietary UCCNC files are not included.
 
 ## Build
 1. Install UCCNC, or locate its `Plugininterface.dll`.
 2. Open `UC_MQTT.sln` in Visual Studio (NuGet restores M2Mqtt and Newtonsoft.Json).
 3. Build, pointing at your UCCNC folder if it isn't `C:\UCCNC`:
    `msbuild UC_MQTT.sln /p:UCCNCDir="C:\path\to\UCCNC"`
-4. Copy `UC_MQTT.dll` and its dependencies into UCCNC's `Plugins` folder.
+4. Copy `UC_MQTT.dll` into UCCNC's `Plugins` folder, and `M2Mqtt.Net.dll` and `Newtonsoft.Json.dll` into the UCCNC install folder (one level up, next to `UCCNC.exe`).
 
 ## Configuration
 Broker address, port, machine name and auto-connect options are set in the plugin's UI (defaults: `localhost:1883`).
