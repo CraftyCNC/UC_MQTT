@@ -307,8 +307,6 @@ Public Class PluginForm
     Private Sub Connect()
         Dim BrokerAddress As String = tbBroker.Text
         Dim BrokerPort As Integer
-        Dim hostname As String
-        Dim ipaddress As IPAddress
 
         Try
             If (tbBroker.Text.Length <> 0) Then
@@ -321,8 +319,6 @@ Public Class PluginForm
                     BrokerPort = 1883
                 End If
 
-                Dim isIP As Boolean = IPAddress.TryParse(BrokerAddress, ipaddress)
-
                 Try
 
                     ' // Specify a custom port (e.g., 1884 instead of the default 1883)
@@ -331,15 +327,8 @@ Public Class PluginForm
                     '// Or if using a hostname
                     '// MqttClient client = New MqttClient("your.mqtt.broker.com", 1884, false, null, null, MqttSslProtocols.None);
 
-                    If isIP = True Then ' Using IP address
-
-                        client = New MqttClient(IPAddress.Parse(BrokerAddress), BrokerPort, False, Nothing, Nothing, MqttSslProtocols.None)
-
-                    Else  ' using hostname
-                        hostname = BrokerAddress
-                        client = New MqttClient(hostname, BrokerPort, False, Nothing, Nothing, MqttSslProtocols.None)
-
-                    End If
+                    ' The hostname constructor also accepts an IP address string
+                    client = New MqttClient(BrokerAddress, BrokerPort, False, Nothing, Nothing, MqttSslProtocols.None)
 
 
                     Dim clientId As String = Guid.NewGuid().ToString()
