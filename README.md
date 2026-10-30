@@ -14,5 +14,30 @@ Broker address, port, machine name and auto-connect options are set in the plugi
 
 `Plugininterface.dll` is proprietary to UCCNC and is not included in this repo.
 
+## MQTT topics
+
+`<machine>` is the **Machine name** set in the plugin (default `UCCNC`).
+
+### State topics (published)
+State topics are published every update interval (set in the plugin, in seconds) at the QoS chosen in the plugin, not retained.
+
+| Topic | Payload values | Enabled by |
+|---|---|---|
+| `<machine>/estop_status/state` | `Estop`, `Cleared` | *Estop/Reset* checkbox |
+| `<machine>/limit_status/state` | `Hard Limit`, `Soft Limit`, `Cleared` | *Limit Switch Hit* checkbox |
+| `<machine>/run_status/state` | `Running`, `Idle` | *Finished (Cycle done)* checkbox |
+| `<machine>/spindle_status/state` | `Running`, `Idle` | *Finished (Cycle done)* checkbox |
+| `<machine>/current_line/state` | current G-code line number | always |
+| `<machine>/percent_complete/state` | percent of job complete (2 decimals), or `NA` when not running | always |
+| `<machine>/run_time/state` | job run time as shown on the UCCNC job status page | always |
+
+### Home Assistant discovery
+Each of the entities above is announced as a retained `sensor` (QoS 1) on
+`homeassistant/sensor/<machine>/<entity>/config`, with `state_topic` set to the matching state topic and a device named `<machine>`.
+
+### Other topics
+- `DustCollector` publishes `OFF` when a G-code program finishes.
+- The plugin's test tab can subscribe to, publish to and clear any topic you enter.
+
 ## License
 MIT, see [LICENSE](LICENSE).
