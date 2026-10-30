@@ -1076,7 +1076,7 @@ Partial Class PluginForm
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "PluginForm"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "UC_Emailer"
+        Me.Text = "UC_MQTT"
         Me.About.ResumeLayout(False)
         Me.TabPage4.ResumeLayout(False)
         Me.Panel2.ResumeLayout(False)
