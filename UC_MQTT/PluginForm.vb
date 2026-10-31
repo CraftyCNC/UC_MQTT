@@ -234,6 +234,9 @@ Public Class PluginForm
         ' But start a Thread which will stop the Loop call from the UCCNC
         ' to prevent the form closing while there is a GUI update in the Loop event
 
+        ' Shutdown (or Closeform) already did the cleanup, let the form close without prompting
+        If MustClose Then Return
+
         If goingtoclose = False Then
 
             res = MessageBox.Show("OK to close, Cancel to minimize to taskbar.", "Close?", MessageBoxButtons.OKCancel, MessageBoxIcon.Information)
@@ -265,17 +268,61 @@ Public Class PluginForm
 
     Public Sub Closeform()
 
-        btnDisconnect.PerformClick()
+        StopLoopAndDisconnect()
+
+        ' Set the mustclose variable to true and call the .Close() function to close the Form
+        ' on the UI thread
+        MustClose = True
+        If Me.IsHandleCreated AndAlso Me.InvokeRequired Then
+            Me.BeginInvoke(Sub() Me.Close())
+        Else
+            Me.Close()
+        End If
+    End Sub
+
+    ' Called by the plugin when UCCNC is shutting down: close without prompting or spawning a thread
+    Public Sub ShutdownClose()
+        If Me.IsHandleCreated AndAlso Me.InvokeRequired Then
+            Me.Invoke(Sub() ShutdownClose())
+            Return
+        End If
+
+        goingtoclose = True
+        StopLoopAndDisconnect()
+        MustClose = True
+        Me.Close()
+    End Sub
+
+    Private Sub StopLoopAndDisconnect()
+        timerUpdate.Enabled = False
 
         ' Stop the Loop event to update the GUI
         PluginMain.LoopStop = True
-        ' Wait until the loop exited
-        While (PluginMain.LoopWorking)
+        ' Wait until the loop exited, but never hang forever
+        Dim sw As Stopwatch = Stopwatch.StartNew()
+        While PluginMain.LoopWorking AndAlso sw.ElapsedMilliseconds < 1000
             Thread.Sleep(10)
         End While
-        ' Set the mustclose variable to true and call the .Close() function to close the Form
-        MustClose = True
-        Me.Close()
+
+        ' Disconnect from the broker without blocking on an unresponsive one
+        Dim c As MqttClient = client
+        If c IsNot Nothing Then
+            RemoveHandler c.ConnectionClosed, AddressOf Client_Disconnect
+            Try
+                If c.IsConnected Then
+                    Dim t As New Thread(Sub()
+                                            Try
+                                                c.Disconnect()
+                                            Catch
+                                            End Try
+                                        End Sub)
+                    t.IsBackground = True
+                    t.Start()
+                    t.Join(2000)
+                End If
+            Catch
+            End Try
+        End If
     End Sub
 
 

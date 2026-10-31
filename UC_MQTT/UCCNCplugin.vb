@@ -58,6 +58,7 @@ Public Class UCCNCplugin
     Public Sub Startup_event()
         If MyForm.IsDisposed Then
             MyForm = New PluginForm(Me)
+            LoopStop = False
         End If
         MyForm.Show()
     End Sub
@@ -66,6 +67,7 @@ Public Class UCCNCplugin
     Public Sub Showup_event()
         If MyForm.IsDisposed Then
             MyForm = New PluginForm(Me)
+            LoopStop = False
         End If
         MyForm.Show()
         MyForm.BringToFront()
@@ -74,7 +76,9 @@ Public Class UCCNCplugin
     ' Called when the UCCNC software is closing.
     Public Sub Shutdown_event()
         Try
-            MyForm.Close()
+            If MyForm IsNot Nothing AndAlso Not MyForm.IsDisposed Then
+                MyForm.ShutdownClose()
+            End If
         Catch ex As Exception
 
         End Try
@@ -85,10 +89,10 @@ Public Class UCCNCplugin
         If LoopStop Then
             Return
         End If
-        LoopWorking = True
-        If MyForm Is Nothing Or MyForm.IsDisposed Then
+        If MyForm Is Nothing OrElse MyForm.IsDisposed Then
             Return
         End If
+        LoopWorking = True
         If FirstRun Then
             FirstRun = False
             ' Write code here which has to be run on first cycle only...
